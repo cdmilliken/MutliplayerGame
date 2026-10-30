@@ -2,6 +2,8 @@
 
 An anonymous multiplayer party game for 3–12 friends. Five rounds of picking the less popular of two options. Secret votes, server timers, shared scores, room codes, and rematches. Phone and laptop browsers work without accounts or installation.
 
+To playtest alone, choose **Play solo · 4 bots** in the browser or Godot client. It starts immediately with four independently voting bots, runs all five rounds, and supports instant rematches. Bot picks are committed before the human choice, remain secret until reveal, and use the same server scoring and timers. Internet access is required.
+
 ## Godot
 
 Import [`godot/project.godot`](godot/project.godot) in Godot 4.5+ and press F5. Godot and web players share rooms. The configured backend is the public deployment. See [`godot/README.md`](godot/README.md). The website also serves `public/split-decision-godot.zip` for downloading the importable project.

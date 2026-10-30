@@ -129,6 +129,8 @@ func show_home() -> void:
 	name_input.custom_minimum_size.y = 54
 	content.add_child(name_input)
 	content.add_child(make_button("Create a room  →", func(): send_action("create")))
+	content.add_child(make_button("Play solo · 4 bots  →", func(): send_action("create_solo"), false))
+	content.add_child(label("Test all five rounds with four automatic opponents. No friends needed.", 15, MUTED))
 	content.add_child(label("OR JOIN YOUR FRIENDS", 13))
 	code_input = LineEdit.new()
 	code_input.placeholder_text = "Five-letter room code"
@@ -146,8 +148,10 @@ func add_rules() -> void:
 func send_action(action: String, extra: Dictionary = {}) -> void:
 	if busy:
 		return
-	if action == "create" or action == "join":
+	if action == "create" or action == "create_solo" or action == "join":
 		nickname = name_input.text.strip_edges()
+		if action == "create_solo" and nickname.is_empty():
+			nickname = "Player"
 		if nickname.is_empty():
 			status_label.text = "Enter a nickname first."
 			return
@@ -225,11 +229,13 @@ func handle_response(result: int, response_code: int, body: PackedByteArray) -> 
 
 func show_room() -> void:
 	clear_content()
-	content.add_child(label("ROOM  " + room_code, 22, ORANGE))
-	content.add_child(make_button("Copy invite link", func():
-		DisplayServer.clipboard_set(backend + "/?room=" + room_code)
-		status_label.text = "Invite copied! Room code: " + room_code
-	, false))
+	var solo: bool = room.get("mode", "multiplayer") == "solo"
+	content.add_child(label("SOLO PRACTICE · 4 BOTS" if solo else "ROOM  " + room_code, 22, ORANGE))
+	if not solo:
+		content.add_child(make_button("Copy invite link", func():
+			DisplayServer.clipboard_set(backend + "/?room=" + room_code)
+			status_label.text = "Invite copied! Room code: " + room_code
+		, false))
 	var phase: String = str(room.phase)
 	if phase == "lobby":
 		content.add_child(label("Get the gang together.", 40))
@@ -292,6 +298,8 @@ func show_room() -> void:
 	sorted.sort_custom(func(a, b): return int(a.score) > int(b.score))
 	for p in sorted:
 		var suffix: String = " (you)" if p.me else ""
+		if p.get("bot", false):
+			suffix += " [BOT]"
 		var info: String = "Host" if p.host else "Ready"
 		if phase != "lobby":
 			info = "%d points" % int(p.score)

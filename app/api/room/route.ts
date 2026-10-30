@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import { newRoom, advance, act, view } from '../../game.mjs';
+import { newRoom, newSoloRoom, advance, act, view } from '../../game.mjs';
 export const dynamic = 'force-dynamic';
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' };
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: cors });
@@ -31,12 +31,12 @@ export async function POST(req: Request) {
     const raw = await req.json();
     if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return json({ error: 'Invalid request.' }, 400);
     const data = raw as Record<string, any>; const id = identity(data.id);
-    if (data.action === 'create') {
+    if (data.action === 'create' || data.action === 'create_solo') {
       const playerName = name(data.name);
       for (let i = 0; i < 6; i++) {
         const bytes = crypto.getRandomValues(new Uint8Array(5)); const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
         const code = [...bytes].map(b => alphabet[b % alphabet.length]).join('');
-        const state = newRoom(id, playerName);
+        const state = data.action === 'create_solo' ? newSoloRoom(id, playerName) : newRoom(id, playerName);
         const r = await env.DB!.prepare('INSERT OR IGNORE INTO rooms (code, state, revision, expires) VALUES (?, ?, 0, ?)').bind(code, JSON.stringify(state), Date.now() + 21600000).run();
         if (r.meta.changes) return json({ code, ...view(state, id) });
       }

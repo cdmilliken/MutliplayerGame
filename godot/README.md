@@ -4,6 +4,8 @@ Open `project.godot` in **Godot 4.5 or newer (standard edition)** and press **F5
 
 This is a runnable Godot client of the live multiplayer game. Browser and Godot players use the **same rooms and server**. Create a room in either client, then enter its code in the other. Gather at least three players and let the host start.
 
+For a solo test, choose **Play solo · 4 bots** on the home screen. A match starts immediately with Pip, Nova, Mochi, and Ziggy. They pick independently after a short delay, play all five rounds, and appear as BOT in the standings. **Run it back** starts another solo match immediately. Solo practice also needs an internet connection to the shared backend.
+
 Rules are built into both clients: secretly pick one of two options in 20 seconds; the less popular side earns a point; ties and missed turns earn zero. Most points after five rounds wins. Rounds advance automatically, and tied leaders share the win.
 
 ## Files

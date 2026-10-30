@@ -1,13 +1,30 @@
-; Import this file in Godot 4.5 or newer, then press F5.
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
+
 config/name="Split Decision"
-run/main_scene="res://main.tscn"
-config/features=PackedStringArray("4.5", "GL Compatibility")
 config/description="Pick a side. Dodge the crowd. Plays with friends in the browser, too."
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[backend]
+
+url="https://split-decision-party-7k4m.fizzyflint15.chatgpt.site"
 
 [display]
+
 window/size/viewport_width=540
 window/size/viewport_height=900
 window/size/window_width_override=540
@@ -16,9 +33,7 @@ window/stretch/mode="canvas_items"
 window/handheld/orientation=1
 
 [rendering]
+
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.973, 0.965, 0.937, 1)
-
-[backend]
-url="https://split-decision-party-7k4m.fizzyflint15.chatgpt.site"
