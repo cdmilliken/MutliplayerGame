@@ -8,6 +8,14 @@ To playtest alone, choose **Play solo · 4 bots** in the browser or Godot client
 
 Import [`godot/project.godot`](godot/project.godot) in Godot 4.5+ and press F5. Godot and web players share rooms. The configured backend is the public deployment. See [`godot/README.md`](godot/README.md). The website also serves `public/split-decision-godot.zip` for downloading the importable project.
 
+## GitHub Pages
+
+The repository root includes a ready-to-serve `index.html`, `.nojekyll`, and bundled files in `github-pages/`. Commit and push **all three** to GitHub. In the repository's **Settings → Pages**, choose **Deploy from a branch**, select your branch and **/(root)**, then save. Open the Pages URL GitHub displays. No Node server or build step is needed on GitHub for this checked-in bundle.
+
+The static page includes the same multiplayer game and **Play solo · 4 bots**. It connects to the existing public game server, so browsers on GitHub Pages, the original site, and Godot can share rooms. Internet access and the live backend are required. Invite links and Home stay under your repository URL, including project pages such as `https://USERNAME.github.io/REPOSITORY/`.
+
+After editing the UI, run `npm run build:pages` (Windows: `npm.cmd run build:pages`) and commit the updated `index.html` and `github-pages/` files. `static-client/index.html` and `static-client/main.tsx` are the static frontend's source. The shared UI lives in `components/game-client.tsx`. To use another backend, set `VITE_GAME_API_URL` before rebuilding; that server must support the same room API and allow cross-origin requests.
+
 ## Web development
 
 Node 22.13+ required. On Windows use `npm.cmd` where PowerShell blocks `npm.ps1`.
