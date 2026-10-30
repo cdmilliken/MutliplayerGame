@@ -1,0 +1,24 @@
+; Import this file in Godot 4.5 or newer, then press F5.
+config_version=5
+
+[application]
+config/name="Split Decision"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+config/description="Pick a side. Dodge the crowd. Plays with friends in the browser, too."
+
+[display]
+window/size/viewport_width=540
+window/size/viewport_height=900
+window/size/window_width_override=540
+window/size/window_height_override=900
+window/stretch/mode="canvas_items"
+window/handheld/orientation=1
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.973, 0.965, 0.937, 1)
+
+[backend]
+url="https://split-decision-party-7k4m.fizzyflint15.chatgpt.site"
